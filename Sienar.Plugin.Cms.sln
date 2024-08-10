@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2ED838D8-C6A6-43F8-9C7B-FA96FC703DC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sienar.Plugin.Cms.Core", "src\Sienar.Plugin.Cms.Core\Sienar.Plugin.Cms.Core.csproj", "{90340DC4-6AD6-4D5D-B365-D823898047BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sienar.Plugin.Cms.EntityFramework", "src\Sienar.Plugin.Cms.EntityFramework\Sienar.Plugin.Cms.EntityFramework.csproj", "{2162C26A-D5A0-4C6C-9AA9-BF1A2960062E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sienar.Plugin.Cms.Server", "src\Sienar.Plugin.Cms.Server\Sienar.Plugin.Cms.Server.csproj", "{9C4B59DE-A9DA-402F-AA76-0E64630ECC20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90340DC4-6AD6-4D5D-B365-D823898047BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90340DC4-6AD6-4D5D-B365-D823898047BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90340DC4-6AD6-4D5D-B365-D823898047BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90340DC4-6AD6-4D5D-B365-D823898047BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2162C26A-D5A0-4C6C-9AA9-BF1A2960062E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2162C26A-D5A0-4C6C-9AA9-BF1A2960062E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2162C26A-D5A0-4C6C-9AA9-BF1A2960062E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2162C26A-D5A0-4C6C-9AA9-BF1A2960062E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C4B59DE-A9DA-402F-AA76-0E64630ECC20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C4B59DE-A9DA-402F-AA76-0E64630ECC20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C4B59DE-A9DA-402F-AA76-0E64630ECC20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C4B59DE-A9DA-402F-AA76-0E64630ECC20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90340DC4-6AD6-4D5D-B365-D823898047BE} = {2ED838D8-C6A6-43F8-9C7B-FA96FC703DC0}
+		{2162C26A-D5A0-4C6C-9AA9-BF1A2960062E} = {2ED838D8-C6A6-43F8-9C7B-FA96FC703DC0}
+		{9C4B59DE-A9DA-402F-AA76-0E64630ECC20} = {2ED838D8-C6A6-43F8-9C7B-FA96FC703DC0}
+	EndGlobalSection
+EndGlobal
