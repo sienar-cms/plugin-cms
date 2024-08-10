@@ -27,6 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\sienar\src\Sienar.Ui.Mvc\Sienar.Ui.Mvc.csproj" />
 		<ProjectReference
 			Condition=" '$(Configuration)' != 'Release' "
 			Include="..\Sienar.Plugin.Cms.Server.Core\Sienar.Plugin.Cms.Server.Core.csproj" />
