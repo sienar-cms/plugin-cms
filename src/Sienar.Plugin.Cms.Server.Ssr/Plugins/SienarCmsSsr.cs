@@ -48,7 +48,7 @@ public class SienarCmsSsr : IWebPlugin
 		});
 	}
 
-	private static void SetupStyles(IStyleProvider sp)
+	private void SetupStyles(IStyleProvider sp)
 	{
 		sp.Add(new()
 		{
@@ -65,6 +65,11 @@ public class SienarCmsSsr : IWebPlugin
 			CrossOriginMode = CrossOriginMode.Anonymous,
 			ReferrerPolicy = ReferrerPolicy.NoReferrer,
 			Integrity = "sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+		});
+		sp.Add(new()
+		{
+			Name = "Sienar UI",
+			Href = $"/_content/Sienar.Ui.Mvc/main.css?v={PluginData.Version}"
 		});
 	}
 }
