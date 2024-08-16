@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Sienar.Configuration;
+using Sienar.Extensions;
+using Sienar.Infrastructure;
 
 namespace Sienar.Plugins;
 
@@ -24,5 +26,45 @@ public class SienarCmsSsr : IWebPlugin
 	public void SetupDependencies(WebApplicationBuilder builder)
 	{
 		builder.AddSienarServerCore();
+	}
+
+	/// <exclude />
+	public void SetupApp(WebApplication app)
+	{
+		app.Services
+			.ConfigureScripts(SetupScripts)
+			.ConfigureStyles(SetupStyles);
+	}
+
+	private static void SetupScripts(IScriptProvider sp)
+	{
+		sp.Add(new()
+		{
+			Src = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js",
+			CrossOriginMode = CrossOriginMode.Anonymous,
+			ReferrerPolicy = ReferrerPolicy.NoReferrer,
+			Integrity = "sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg==",
+			ShouldDefer = true
+		});
+	}
+
+	private static void SetupStyles(IStyleProvider sp)
+	{
+		sp.Add(new()
+		{
+			Name = "Bootstrap",
+			Href = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css",
+			CrossOriginMode = CrossOriginMode.Anonymous,
+			ReferrerPolicy = ReferrerPolicy.NoReferrer,
+			Integrity = "sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+		});
+		sp.Add(new()
+		{
+			Name = "FontAwesome",
+			Href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css",
+			CrossOriginMode = CrossOriginMode.Anonymous,
+			ReferrerPolicy = ReferrerPolicy.NoReferrer,
+			Integrity = "sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+		});
 	}
 }
