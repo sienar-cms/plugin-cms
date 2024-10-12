@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
+using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Sienar.Configuration;
 using Sienar.Email;
 using Sienar.Extensions;
 using Sienar.Hooks;
@@ -13,39 +17,36 @@ using Sienar.Identity.Results;
 using Sienar.Infrastructure;
 using Sienar.Media;
 using Sienar.Media.Hooks;
-using Sienar.Services;
 
-namespace Sienar.Configuration;
+namespace Sienar.Plugins;
 
-/// <summary>
-/// Contains <see cref="WebApplicationBuilder"/> extension methods for the <c>Sienar.Utils</c> assembly
-/// </summary>
-public static class SienarPluginCmsServerCoreWebApplicationBuilderExtensions
+/// <exclude />
+public class CmsRest : IWebPlugin
 {
-	/// <summary>
-	/// Adds Sienar server-side services
-	/// </summary>
-	/// <param name="self">the web application builder</param>
-	public static void AddSienarServerCore(
-		this WebApplicationBuilder self)
+	public PluginData PluginData { get; } = new()
+	{
+		Name = "Sienar CMS - REST API",
+		Description = "Configures Sienar as a collection of REST API endpoints that can be used as a backend for desktop applications, mobile apps, or JavaScript/WebAssembly SPAs.",
+		Author = "Christian LeVesque",
+		AuthorUrl = "https://levesque.dev",
+		Homepage = "https://sienar.io",
+		Version = Version.Parse("0.1.0")
+	};
+
+	public void SetupDependencies(WebApplicationBuilder builder)
 	{
 		SienarUtils.SetupBaseDirectory();
 
-		var services = self.Services;
-		var config = self.Configuration;
+		var services = builder.Services;
+		var config = builder.Configuration;
 
-		services
-			.AddHttpContextAccessor();
+		services.AddHttpContextAccessor();
 
-		services.TryAddScoped<IBotDetector, BotDetector>();
 		services.TryAddScoped<IEmailSender, DefaultEmailSender>();
 		services.TryAddScoped<IPasswordHasher<SienarUser>, PasswordHasher<SienarUser>>();
 		services.TryAddScoped<IPasswordManager, PasswordManager>();
 		services.TryAddScoped<IUserClaimsFactory, UserClaimsFactory>();
 		services.TryAddScoped<IUserClaimsPrincipalFactory<SienarUser>, UserClaimsPrincipalFactory>();
-		services.TryAddScoped<IReadableNotificationService, RestNotificationService>();
-		services.TryAddScoped<INotificationService>(
-			sp => sp.GetRequiredService<IReadableNotificationService>());
 
 
 		/************
