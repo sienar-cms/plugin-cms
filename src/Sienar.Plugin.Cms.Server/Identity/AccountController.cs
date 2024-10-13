@@ -9,7 +9,7 @@ namespace Sienar.Identity;
 
 /// <exclude />
 [ApiController]
-[Route("account")]
+[Route("api/account")]
 [Authorize]
 public class AccountController : ServiceController
 {
