@@ -35,14 +35,6 @@ public static class SienarPluginCmsServerCoreWebApplicationBuilderExtensions
 		var config = self.Configuration;
 
 		services
-			.ReplaceService(
-				typeof(IStatusService<>),
-				typeof(StatusService<>),
-				typeof(SienarStatusService<>))
-			.ReplaceService(
-				typeof(IService<,>),
-				typeof(Service<,>),
-				typeof(SienarService<,>))
 			.AddHttpContextAccessor();
 
 		services.TryAddScoped<IBotDetector, BotDetector>();
