@@ -31,4 +31,11 @@ public class AccountController : ServiceController
 		[FromForm] ConfirmAccountRequest data,
 		[FromServices] IStatusService<ConfirmAccountRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpPost("login")]
+	[AllowAnonymous]
+	public Task<IActionResult> Login(
+		[FromForm] LoginRequest data,
+		[FromServices] IStatusService<LoginRequest> service)
+		=> Execute(() => service.Execute(data));
 }
