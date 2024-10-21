@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sienar.Identity.Requests;
+using Sienar.Identity.Results;
 using Sienar.Infrastructure;
 using Sienar.Services;
 
@@ -24,6 +25,11 @@ public class AccountController : ServiceController
 		[FromForm] RegisterRequest data,
 		[FromServices] IStatusService<RegisterRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpGet]
+	public Task<IActionResult> GetAccountData(
+		[FromServices] IResultService<AccountDataResult> service)
+		=> Execute(service.Execute);
 
 	[HttpPost("confirm")]
 	[AllowAnonymous]
