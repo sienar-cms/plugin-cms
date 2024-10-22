@@ -22,5 +22,5 @@ public class AccountUrlProvider : IAccountUrlProvider
 
 	/// <inheritdoc />
 	public string ResetPasswordUrl
-		=> $"{_sienarOptions.SiteUrl}/Dashboard/Account/ResetPassword";
+		=> $"{_sienarOptions.SiteUrl}/dashboard/account/reset-password";
 }
