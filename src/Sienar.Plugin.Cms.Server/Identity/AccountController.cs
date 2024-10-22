@@ -57,4 +57,11 @@ public class AccountController : ServiceController
 		[FromForm] ForgotPasswordRequest data,
 		[FromServices] IStatusService<ForgotPasswordRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpPatch("password")]
+	[AllowAnonymous]
+	public Task<IActionResult> PerformPasswordReset(
+		[FromForm] ResetPasswordRequest data,
+		[FromServices] IStatusService<ResetPasswordRequest> service)
+		=> Execute(() => service.Execute(data));
 }
