@@ -44,4 +44,10 @@ public class AccountController : ServiceController
 		[FromForm] LoginRequest data,
 		[FromServices] IStatusService<LoginRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpDelete("login")]
+	public Task<IActionResult> Logout(
+		[FromForm] LogoutRequest data,
+		[FromServices] IStatusService<LogoutRequest> service)
+		=> Execute(() => service.Execute(data));
 }
