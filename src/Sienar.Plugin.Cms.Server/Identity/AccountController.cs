@@ -70,4 +70,10 @@ public class AccountController : ServiceController
 		[FromForm] InitiateEmailChangeRequest data,
 		[FromServices] IStatusService<InitiateEmailChangeRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpPatch("email")]
+	public Task<IActionResult> UpdateEmail(
+		[FromForm] PerformEmailChangeRequest data,
+		[FromServices] IStatusService<PerformEmailChangeRequest> service)
+		=> Execute(() => service.Execute(data));
 }
