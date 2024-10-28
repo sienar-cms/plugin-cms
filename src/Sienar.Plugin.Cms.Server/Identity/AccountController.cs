@@ -2,7 +2,9 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sienar.Data;
 using Sienar.Identity.Requests;
 using Sienar.Identity.Results;
 using Sienar.Infrastructure;
@@ -82,4 +84,27 @@ public class AccountController : ServiceController
 		[FromForm] PerformEmailChangeRequest data,
 		[FromServices] IStatusService<PerformEmailChangeRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpGet("personal-data")]
+	public async Task<IActionResult> GetPersonalData(
+		[FromServices] IResultService<PersonalDataResult> service)
+	{
+		var result = await service.Execute();
+
+		if (result.Status != OperationStatus.Success
+			|| result.Result?.PersonalDataFile?.Contents is null)
+		{
+			return new ObjectResult("Unable to download personal data")
+			{
+				StatusCode = StatusCodes.Status500InternalServerError
+			};
+		}
+
+		var file = result.Result.PersonalDataFile;
+		Response.Headers.Append("Content-Disposition", $"attachment; filename={file.Name}");
+
+		return new FileContentResult(
+			result.Result.PersonalDataFile.Contents,
+			result.Result.PersonalDataFile.Mime);
+	}
 }
