@@ -33,6 +33,12 @@ public class AccountController : ServiceController
 		[FromServices] IResultService<AccountDataResult> service)
 		=> Execute(service.Execute);
 
+	[HttpDelete]
+	public Task<IActionResult> DeleteAccount(
+		[FromForm] DeleteAccountRequest data,
+		[FromServices] IStatusService<DeleteAccountRequest> service)
+		=> Execute(() => service.Execute(data));
+
 	[HttpPost("confirm")]
 	[AllowAnonymous]
 	public Task<IActionResult> Confirm(
