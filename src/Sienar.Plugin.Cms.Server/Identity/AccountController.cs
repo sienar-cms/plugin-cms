@@ -64,4 +64,10 @@ public class AccountController : ServiceController
 		[FromForm] ResetPasswordRequest data,
 		[FromServices] IStatusService<ResetPasswordRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpPost("change-email")]
+	public Task<IActionResult> ChangeEmail(
+		[FromForm] InitiateEmailChangeRequest data,
+		[FromServices] IStatusService<InitiateEmailChangeRequest> service)
+		=> Execute(() => service.Execute(data));
 }
