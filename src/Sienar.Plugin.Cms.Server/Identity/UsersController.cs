@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sienar.Data;
+using Sienar.Identity.Requests;
 using Sienar.Infrastructure;
 using Sienar.Services;
 
@@ -49,4 +50,16 @@ public class UsersController : ServiceController
 		Guid id,
 		[FromServices] IEntityDeleter<SienarUser> service)
 		=> Execute(() => service.Delete(id));
+
+	[HttpPost("roles")]
+	public Task<IActionResult> AddToRole(
+		[FromForm] AddUserToRoleRequest data,
+		[FromServices] IStatusService<AddUserToRoleRequest> service)
+		=> Execute(() => service.Execute(data));
+
+	[HttpDelete("roles")]
+	public Task<IActionResult> RemoveFromRole(
+		[FromForm] RemoveUserFromRoleRequest data,
+		[FromServices] IStatusService<RemoveUserFromRoleRequest> service)
+		=> Execute(() => service.Execute(data));
 }
