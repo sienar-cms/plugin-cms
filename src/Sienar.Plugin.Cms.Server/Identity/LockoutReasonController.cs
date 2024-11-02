@@ -13,8 +13,7 @@ namespace Sienar.Identity;
 /// <exclude />
 [ApiController]
 [Route("/api/lockout-reasons")]
-// [Authorize(Roles = Roles.Admin)]
-[AllowAnonymous]
+[Authorize(Roles = Roles.Admin)]
 public class LockoutReasonController : ServiceController
 {
 	public LockoutReasonController(IOperationResultMapper mapper)
@@ -27,7 +26,6 @@ public class LockoutReasonController : ServiceController
 		=> Execute(() => service.Read(filter));
 
 	[HttpGet("{id:guid}")]
-	[AllowAnonymous]
 	public Task<IActionResult> Read(
 		Guid id,
 		[FromQuery] Filter? filter,
