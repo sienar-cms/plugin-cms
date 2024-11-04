@@ -74,4 +74,10 @@ public class UsersController : ServiceController
 		[FromForm] UnlockUserAccountRequest data,
 		[FromServices] IStatusService<UnlockUserAccountRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpPatch("confirm")]
+	public Task<IActionResult> ConfirmUserAccount(
+		[FromForm] ManuallyConfirmUserAccountRequest data,
+		[FromServices] IStatusService<ManuallyConfirmUserAccountRequest> service)
+		=> Execute(() => service.Execute(data));
 }
