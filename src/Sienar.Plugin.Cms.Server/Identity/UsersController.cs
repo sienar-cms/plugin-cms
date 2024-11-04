@@ -62,4 +62,10 @@ public class UsersController : ServiceController
 		[FromForm] RemoveUserFromRoleRequest data,
 		[FromServices] IStatusService<RemoveUserFromRoleRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpPatch("lock")]
+	public Task<IActionResult> LockUser(
+		[FromForm] LockUserAccountRequest data,
+		[FromServices] IStatusService<LockUserAccountRequest> service)
+		=> Execute(() => service.Execute(data));
 }
