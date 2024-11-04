@@ -68,4 +68,10 @@ public class UsersController : ServiceController
 		[FromForm] LockUserAccountRequest data,
 		[FromServices] IStatusService<LockUserAccountRequest> service)
 		=> Execute(() => service.Execute(data));
+
+	[HttpDelete("lock")]
+	public Task<IActionResult> UnlockUser(
+		[FromForm] UnlockUserAccountRequest data,
+		[FromServices] IStatusService<UnlockUserAccountRequest> service)
+		=> Execute(() => service.Execute(data));
 }
