@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
+using System;
 using System.Threading.Tasks;
 using Sienar.Errors;
 using Sienar.Identity.Requests;
@@ -45,7 +46,7 @@ public class LockUserAccountProcessor : IProcessor<LockUserAccountRequest, bool>
 		}
 
 		user.LockoutReasons.AddRange(reasons);
-		user.LockoutEnd = request.EndDate;
+		user.LockoutEnd = request.EndDate ?? DateTime.MaxValue;
 
 		return await _userRepository.Update(user)
 			? new(
