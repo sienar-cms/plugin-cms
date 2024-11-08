@@ -16,15 +16,18 @@ public class DeleteAccountProcessor : IProcessor<DeleteAccountRequest, bool>
 	private readonly IUserAccessor _userAccessor;
 	private readonly IUserRepository _userRepository;
 	private readonly IPasswordManager _passwordManager;
+	private readonly ISignInManager _signInManager;
 
 	public DeleteAccountProcessor(
 		IUserAccessor userAccessor,
 		IUserRepository userRepository,
-		IPasswordManager passwordManager)
+		IPasswordManager passwordManager,
+		ISignInManager signInManager)
 	{
 		_userAccessor = userAccessor;
 		_userRepository = userRepository;
 		_passwordManager = passwordManager;
+		_signInManager = signInManager;
 	}
 
 	public async Task<OperationResult<bool>> Process(DeleteAccountRequest request)
@@ -52,14 +55,19 @@ public class DeleteAccountProcessor : IProcessor<DeleteAccountRequest, bool>
 				message: CmsErrors.Account.LoginFailedInvalid);
 		}
 
-		return await _userRepository.Delete(user.Id)
-			? new(
+		var deleted = await _userRepository.Delete(user.Id);
+		if (deleted)
+		{
+			await _signInManager.SignOut();
+			return new(
 				OperationStatus.Success,
 				true,
-				"Account deleted successfully")
-			: new(
-				OperationStatus.Unknown,
-				false,
-				StatusMessages.Database.QueryFailed);
+				"Account deleted successfully");
+		}
+
+		return new(
+			OperationStatus.Unknown,
+			false,
+			StatusMessages.Database.QueryFailed);
 	}
 }
