@@ -95,6 +95,7 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 
 		// User is authenticated and able to log in
 		user.LoginFailedCount = 0;
+		user.LockoutEnd = null;
 		await _repository.Update(user);
 
 		// Save the token to the token cache
