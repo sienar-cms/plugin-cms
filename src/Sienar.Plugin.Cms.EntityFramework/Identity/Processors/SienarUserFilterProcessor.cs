@@ -20,10 +20,12 @@ public class SienarUserFilterProcessor : IEntityFrameworkFilterProcessor<SienarU
 			return dataset;
 		}
 
+		var searchTerm = filter.SearchTerm.ToUpperInvariant();
+
 		return dataset.Where(
-			s => s.Username.Contains(filter.SearchTerm)
-			|| s.Email.Contains(filter.SearchTerm)
-			|| !string.IsNullOrEmpty(s.PendingEmail) && s.PendingEmail.Contains(filter.SearchTerm));
+			s => s.NormalizedUsername.Contains(searchTerm)
+			|| s.NormalizedEmail.Contains(searchTerm)
+			|| !string.IsNullOrEmpty(s.NormalizedPendingEmail) && s.NormalizedPendingEmail.Contains(searchTerm));
 	}
 
 	public IQueryable<SienarUser> ProcessIncludes(IQueryable<SienarUser> dataset, Filter filter)
