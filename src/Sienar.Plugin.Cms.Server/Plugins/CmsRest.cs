@@ -61,6 +61,7 @@ public class CmsRest : IWebPlugin
 		// CRUD
 		services
 			.AddAccessValidator<SienarUser, UserIsAdminAccessValidator<SienarUser>>()
+			.AddBeforeHook<SienarUser, UserMapNormalizedFieldsHook>()
 			.AddBeforeHook<SienarUser, UserPasswordUpdateHook>()
 			.AddStateValidator<SienarUser, EnsureAccountInfoUniqueValidator>()
 			.AddBeforeHook<SienarUser, RemoveUserRelatedEntitiesHook>()
