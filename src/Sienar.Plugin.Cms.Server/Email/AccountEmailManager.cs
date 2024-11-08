@@ -64,7 +64,8 @@ public class AccountEmailManager : IAccountEmailManager
 			VerificationCodeTypes.ChangeEmail);
 
 		var message = CreateMessage(
-			user,
+			user.PendingEmail,
+			user.Username,
 			_identitySubjectOptions.EmailChange,
 			await _factory.ChangeEmailHtml(user.Username, user.Id, code.Code),
 			await _factory.ChangeEmailText(user.Username, user.Id, code.Code));
