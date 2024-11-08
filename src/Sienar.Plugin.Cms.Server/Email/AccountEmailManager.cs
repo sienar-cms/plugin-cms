@@ -103,9 +103,31 @@ public class AccountEmailManager : IAccountEmailManager
 		string subject,
 		string htmlBody,
 		string textBody)
+		=> CreateMessage(
+			user.Email,
+			user.Username,
+			subject,
+			htmlBody,
+			textBody);
+
+	/// <summary>
+	/// Creates a <see cref="MailMessage"/> using the given message details
+	/// </summary>
+	/// <param name="email">the recipient's email address</param>
+	/// <param name="name">the recipient's name</param>
+	/// <param name="subject">The email subject</param>
+	/// <param name="htmlBody">The email's HTML version</param>
+	/// <param name="textBody">The email's text version</param>
+	/// <returns>the <see cref="MailMessage"/></returns>
+	private MailMessage CreateMessage(
+		string email,
+		string name,
+		string subject,
+		string htmlBody,
+		string textBody)
 	{
 		var message = new MailMessage();
-		message.To.Add(new MailAddress(user.Email, user.Username));
+		message.To.Add(new MailAddress(email, name));
 		message.From = new MailAddress(_senderOptions.FromAddress, _senderOptions.FromName);
 		message.Subject = subject;
 		message.Body = htmlBody;
