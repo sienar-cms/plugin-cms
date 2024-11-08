@@ -14,13 +14,13 @@ public class AccountUrlProvider : IAccountUrlProvider
 
 	/// <inheritdoc />
 	public string ConfirmationUrl
-		=> $"{_sienarOptions.SiteUrl}/Dashboard/Account/Confirm";
+		=> $"{_sienarOptions.SiteUrl}/dashboard/account/confirm";
 
 	/// <inheritdoc />
 	public string EmailChangeUrl
-		=> $"{_sienarOptions.SiteUrl}/Dashboard/Account/Email/Confirm";
+		=> $"{_sienarOptions.SiteUrl}/dashboard/account/change-email/confirm";
 
 	/// <inheritdoc />
 	public string ResetPasswordUrl
-		=> $"{_sienarOptions.SiteUrl}/Dashboard/Account/ResetPassword";
+		=> $"{_sienarOptions.SiteUrl}/dashboard/account/reset-password";
 }

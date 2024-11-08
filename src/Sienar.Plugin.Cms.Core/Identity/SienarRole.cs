@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Sienar.Data;
 
 namespace Sienar.Identity;
@@ -14,6 +15,7 @@ public class SienarRole : EntityBase
 	/// <summary>
 	/// A list of all users in this role
 	/// </summary>
+	[JsonIgnore]
 	public List<SienarUser> Users { get; set; } = [];
 
 	/// <inheritdoc/>

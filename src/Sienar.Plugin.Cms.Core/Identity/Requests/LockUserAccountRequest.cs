@@ -7,5 +7,5 @@ public class LockUserAccountRequest
 {
 	public Guid UserId { get; set; }
 	public List<Guid> Reasons { get; set; } = [];
-	public DateTime EndDate { get; set; }
+	public DateTime? EndDate { get; set; }
 }

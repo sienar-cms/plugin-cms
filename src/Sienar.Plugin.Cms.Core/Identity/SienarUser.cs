@@ -20,7 +20,7 @@ public class SienarUser : EntityBase
 	/// <summary>
 	/// Gets or sets a salted and hashed representation of the password
 	/// </summary>
-	public string PasswordHash { get; set; } = default!;
+	public string PasswordHash { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets the user's plain text password

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sienar.Extensions;
 using Sienar.Identity;
 using Sienar.Identity.Data;
+using Sienar.Identity.Hooks;
 using Sienar.Identity.Processors;
 using Sienar.Media;
 using Sienar.Media.Processors;
@@ -35,6 +36,7 @@ public class SienarCmsEfRepositories<TContext> : IWebPlugin
 
 		services
 			.AddEntityFrameworkEntity<SienarUser, SienarUserFilterProcessor, IUserRepository, UserRepository<TContext>>()
+			.AddBeforeHook<SienarUser, FetchNotUpdatedUserPropertiesHook<TContext>>()
 			.AddEntityFrameworkEntityWithDefaultRepository<SienarRole, SienarRoleFilterProcessor, TContext>()
 			.AddEntityFrameworkEntity<LockoutReason, LockoutReasonFilterProcessor, ILockoutReasonRepository, LockoutReasonRepository<TContext>>()
 			.AddEntityFrameworkEntityWithDefaultRepository<Upload, UploadFilterProcessor, TContext>();
