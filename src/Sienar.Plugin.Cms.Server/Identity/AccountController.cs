@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -50,7 +51,7 @@ public class AccountController : ServiceController
 	[AllowAnonymous]
 	public Task<IActionResult> Login(
 		[FromForm] LoginRequest data,
-		[FromServices] IStatusService<LoginRequest> service)
+		[FromServices] IService<LoginRequest, Guid?> service)
 		=> Execute(() => service.Execute(data));
 
 	[HttpDelete("login")]

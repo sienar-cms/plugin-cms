@@ -15,12 +15,13 @@ using Sienar.Processors;
 namespace Sienar.Identity.Processors;
 
 /// <exclude />
-public class LoginProcessor : IProcessor<LoginRequest, bool>
+public class LoginProcessor : IProcessor<LoginRequest, Guid?>
 {
 	private readonly IUserRepository _repository;
 	private readonly IPasswordManager _passwordManager;
 	private readonly ISignInManager _signInManager;
 	private readonly IAccountEmailManager _emailManager;
+	private readonly IVerificationCodeManager _vcManager;
 	private readonly LoginOptions _loginOptions;
 	private readonly SienarOptions _appOptions;
 
@@ -29,6 +30,7 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 		IPasswordManager passwordManager,
 		ISignInManager signInManager,
 		IAccountEmailManager emailManager,
+		IVerificationCodeManager vcManager,
 		IOptions<LoginOptions> loginOptions,
 		IOptions<SienarOptions> appOptions)
 	{
@@ -36,11 +38,12 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 		_passwordManager = passwordManager;
 		_signInManager = signInManager;
 		_emailManager = emailManager;
+		_vcManager = vcManager;
 		_loginOptions = loginOptions.Value;
 		_appOptions = appOptions.Value;
 	}
 
-	public async Task<OperationResult<bool>> Process(LoginRequest request)
+	public async Task<OperationResult<Guid?>> Process(LoginRequest request)
 	{
 		var user = await _repository.ReadUserByNameOrEmail(
 			request.AccountName,
@@ -54,8 +57,10 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 
 		if (user.IsLockedOut())
 		{
+			var code = await _vcManager.CreateCode(user, VerificationCodeTypes.ViewLockoutReasons);
 			return new(
 				OperationStatus.Unauthorized,
+				code.Code,
 				message: CmsErrors.Account.LoginFailedLocked);
 		}
 
@@ -66,11 +71,13 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 			{
 				user.LoginFailedCount = 0;
 				user.LockoutEnd = DateTime.Now + _loginOptions.LockoutTimespan;
+				var code = await _vcManager.CreateCode(user, VerificationCodeTypes.ViewLockoutReasons);
 
 				await _repository.Update(user);
 				await _emailManager.SendAccountLockedEmail(user);
 				return new(
 					OperationStatus.Unauthorized,
+					code.Code,
 					message: CmsErrors.Account.LoginFailedLocked);
 			}
 
@@ -107,9 +114,6 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 		// Save the token to the token cache
 		await _signInManager.SignIn(user, request.RememberMe);
 
-		return new(
-			OperationStatus.Success,
-			true,
-			"Logged in successfully");
+		return new(message: "Logged in successfully");
 	}
 }

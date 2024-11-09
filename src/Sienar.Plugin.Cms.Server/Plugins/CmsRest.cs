@@ -68,7 +68,7 @@ public class CmsRest : IWebPlugin
 			.AddBeforeHook<LockoutReason, LockoutReasonMapNormalizedFieldsHook>()
 
 		// Security
-			.AddStatusProcessor<LoginRequest, LoginProcessor>()
+			.AddProcessor<LoginRequest, Guid?, LoginProcessor>()
 			.AddStatusProcessor<LogoutRequest, LogoutProcessor>()
 			.AddResultProcessor<PersonalDataResult, PersonalDataProcessor>()
 			.AddStatusProcessor<AddUserToRoleRequest, UserRoleChangeProcessor>()
