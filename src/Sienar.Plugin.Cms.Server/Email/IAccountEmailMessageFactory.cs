@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sienar.Identity;
 
 namespace Sienar.Email;
 
@@ -76,4 +78,28 @@ public interface IAccountEmailMessageFactory
 		string username,
 		Guid userId,
 		Guid code);
+
+	/// <summary>
+	/// Creates an HTML version of the account locked email
+	/// </summary>
+	/// <param name="username"></param>
+	/// <param name="lockoutEnd"></param>
+	/// <param name="lockoutReasons"></param>
+	/// <returns></returns>
+	Task<string> AccountLockedHtml(
+		string username,
+		DateTime lockoutEnd,
+		List<LockoutReason> lockoutReasons);
+
+	/// <summary>
+	/// Creates an HTML version of the account locked email
+	/// </summary>
+	/// <param name="username"></param>
+	/// <param name="lockoutEnd"></param>
+	/// <param name="lockoutReasons"></param>
+	/// <returns></returns>
+	Task<string> AccountLockedText(
+		string username,
+		DateTime lockoutEnd,
+		List<LockoutReason> lockoutReasons);
 }

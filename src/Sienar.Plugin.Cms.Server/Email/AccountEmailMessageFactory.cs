@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Sienar.Identity;
@@ -88,6 +91,32 @@ public class AccountEmailMessageFactory : IAccountEmailMessageFactory
 		       "If this was not you, delete this email. The reset code will expire in 30 minutes and your account details will not be changed.\n\n" +
 		       "Regards,\n\n" +
 		       _senderOptions.Signature;
+
+		return Task.FromResult(message);
+	}
+
+	/// <inheritdoc />
+	public Task<string> AccountLockedHtml(
+		string username,
+		DateTime lockoutEnd,
+		List<LockoutReason> lockoutReasons)
+	{
+		var message = $"<!DOCTYPE html><html><head><title>Account locked</title></head><body><p>Hello {{username}},</p><p>Your account has been locked for the following reason{(lockoutReasons.Count > 1 ? "s" : "")}:<p><ul>{lockoutReasons.Select(r => $"<li>{r.Reason}</li></ul><p>Regards,</p><p>{_senderOptions.Signature}</p></body></html>")}";
+
+		return Task.FromResult(message);
+	}
+
+	/// <inheritdoc />
+	public Task<string> AccountLockedText(
+		string username,
+		DateTime lockoutEnd,
+		List<LockoutReason> lockoutReasons)
+	{
+		var message = $"Hello {username},\n\n" +
+			$"Your account has been locked for the following reason{(lockoutReasons.Count > 1 ? "s" : "")}:\n\n" +
+			string.Join("\n\n", lockoutReasons.Select(r => r.Reason)) +
+			"\n\nRegards,\n\n" +
+			_senderOptions.Signature;
 
 		return Task.FromResult(message);
 	}
