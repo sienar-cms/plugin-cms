@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Sienar.Data;
 using Sienar.Media;
 
@@ -16,6 +17,12 @@ public class SienarUser : EntityBase
 	/// </summary>
 	[PersonalData]
 	public string Username { get; set; } = default!;
+
+	/// <summary>
+	/// Gets or sets the normalized username
+	/// </summary>
+	[JsonIgnore]
+	public string NormalizedUsername { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Gets or sets a salted and hashed representation of the password
@@ -75,6 +82,12 @@ public class SienarUser : EntityBase
 	public string Email { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Gets or sets the normalized email address
+	/// </summary>
+	[JsonIgnore]
+	public string NormalizedEmail { get; set; } = string.Empty;
+
+	/// <summary>
 	/// Gets or sets whether the email address for the user has been confirmed
 	/// </summary>
 	public bool EmailConfirmed { get; set; }
@@ -84,6 +97,12 @@ public class SienarUser : EntityBase
 	/// </summary>
 	[PersonalData]
 	public string? PendingEmail { get; set; }
+
+	/// <summary>
+	/// Gets or sets the normalized pending email address
+	/// </summary>
+	[JsonIgnore]
+	public string? NormalizedPendingEmail { get; set; }
 
 #endregion
 

@@ -43,7 +43,9 @@ public class RegisterProcessor : IProcessor<RegisterRequest, bool>
 		var user = new SienarUser
 		{
 			Username = request.Username,
+			NormalizedUsername = request.Username.ToUpperInvariant(),
 			Email = request.Email,
+			NormalizedEmail = request.Email.ToUpperInvariant(),
 			ConcurrencyStamp = Guid.NewGuid()
 		};
 

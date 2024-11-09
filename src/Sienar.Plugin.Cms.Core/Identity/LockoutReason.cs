@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Sienar.Data;
 
 namespace Sienar.Identity;
@@ -7,6 +8,9 @@ namespace Sienar.Identity;
 public class LockoutReason : EntityBase
 {
 	public string Reason { get; set; } = string.Empty;
+
+	[JsonIgnore]
+	public string NormalizedReason { get; set; } = string.Empty;
 
 	public List<SienarUser> Users { get; set; } = [];
 

@@ -99,7 +99,9 @@ public class PerformEmailChangeProcessor
 
 		// Code was valid
 		user.Email = user.PendingEmail;
+		user.NormalizedEmail = user.NormalizedPendingEmail!.ToUpperInvariant();
 		user.PendingEmail = null;
+		user.NormalizedPendingEmail = null;
 
 		return await _userRepository.Update(user)
 			? new(

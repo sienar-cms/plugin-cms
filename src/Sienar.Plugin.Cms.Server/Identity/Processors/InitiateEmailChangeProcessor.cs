@@ -72,6 +72,7 @@ public class InitiateEmailChangeProcessor : IProcessor<InitiateEmailChangeReques
 		if (shouldSendConfirmationEmail)
 		{
 			user.PendingEmail = request.Email;
+			user.NormalizedPendingEmail = request.Email.ToUpperInvariant();
 		}
 		else
 		{

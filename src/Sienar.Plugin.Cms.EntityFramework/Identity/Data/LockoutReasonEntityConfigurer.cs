@@ -9,8 +9,12 @@ internal class LockoutReasonEntityConfigurer : IEntityTypeConfiguration<LockoutR
 	public void Configure(EntityTypeBuilder<LockoutReason> builder)
 	{
 		builder
-			.HasIndex(l => l.Reason)
+			.HasIndex(l => l.NormalizedReason)
 			.IsUnique();
+		builder
+			.Property(l => l.NormalizedReason)
+			.HasMaxLength(255)
+			.IsRequired();
 		builder
 			.Property(l => l.Reason)
 			.HasMaxLength(255)

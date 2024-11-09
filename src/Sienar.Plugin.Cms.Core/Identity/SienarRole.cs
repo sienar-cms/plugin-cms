@@ -13,6 +13,12 @@ public class SienarRole : EntityBase
 	public required string Name { get; set; }
 
 	/// <summary>
+	/// Represents the normalized name of the role
+	/// </summary>
+	[JsonIgnore]
+	public string NormalizedName { get; set; } = string.Empty;
+
+	/// <summary>
 	/// A list of all users in this role
 	/// </summary>
 	[JsonIgnore]
