@@ -9,8 +9,12 @@ internal class SienarRoleEntityConfigurer : IEntityTypeConfiguration<SienarRole>
 	public void Configure(EntityTypeBuilder<SienarRole> builder)
 	{
 		builder
-			.HasIndex(r => r.Name)
+			.HasIndex(r => r.NormalizedName)
 			.IsUnique();
+		builder
+			.Property(r => r.NormalizedName)
+			.HasMaxLength(100)
+			.IsRequired();
 		builder
 			.Property(r => r.Name)
 			.HasMaxLength(100)
