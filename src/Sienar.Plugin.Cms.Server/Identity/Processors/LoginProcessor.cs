@@ -66,6 +66,12 @@ public class LoginProcessor : IProcessor<LoginRequest, bool>
 			{
 				user.LoginFailedCount = 0;
 				user.LockoutEnd = DateTime.Now + _loginOptions.LockoutTimespan;
+
+				await _repository.Update(user);
+				await _emailManager.SendAccountLockedEmail(user);
+				return new(
+					OperationStatus.Unauthorized,
+					message: CmsErrors.Account.LoginFailedLocked);
 			}
 
 			await _repository.Update(user);
