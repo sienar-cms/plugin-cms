@@ -91,6 +91,18 @@ public class AccountEmailManager : IAccountEmailManager
 		return await _sender.Send(message);
 	}
 
+	/// <inheritdoc />
+	public async Task<bool> SendAccountLockedEmail(SienarUser user)
+	{
+		var message = CreateMessage(
+			user,
+			_identitySubjectOptions.AccountLocked,
+			await _factory.AccountLockedHtml(user.Username, user.LockoutEnd!.Value, user.LockoutReasons),
+			await _factory.AccountLockedText(user.Username, user.LockoutEnd!.Value, user.LockoutReasons));
+
+		return await _sender.Send(message);
+	}
+
 	/// <summary>
 	/// Creates a <see cref="MailMessage"/> using the given message details
 	/// </summary>

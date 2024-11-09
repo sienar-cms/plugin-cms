@@ -37,4 +37,11 @@ public interface IAccountEmailManager
 	Task<bool> SendPasswordResetEmail(
 		SienarUser user,
 		VerificationCode? code = null);
+
+	/// <summary>
+	/// Sends a user an email notifying them that their account has been locked
+	/// </summary>
+	/// <param name="user">the user who should receive the account locked email</param>
+	/// <returns>whether the operation was successful</returns>
+	Task<bool> SendAccountLockedEmail(SienarUser user);
 }
