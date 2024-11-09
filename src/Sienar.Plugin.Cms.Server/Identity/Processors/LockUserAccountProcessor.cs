@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Sienar.Errors;
 using Sienar.Identity.Requests;
 using Sienar.Data;
+using Sienar.Email;
 using Sienar.Identity.Data;
 using Sienar.Processors;
 
@@ -15,13 +16,16 @@ public class LockUserAccountProcessor : IProcessor<LockUserAccountRequest, bool>
 {
 	private readonly IUserRepository _userRepository;
 	private readonly ILockoutReasonRepository _lockoutReasonRepository;
+	private readonly IAccountEmailManager _emailManager;
 
 	public LockUserAccountProcessor(
 		IUserRepository userRepository,
-		ILockoutReasonRepository lockoutReasonRepository)
+		ILockoutReasonRepository lockoutReasonRepository,
+		IAccountEmailManager emailManager)
 	{
 		_userRepository = userRepository;
 		_lockoutReasonRepository = lockoutReasonRepository;
+		_emailManager = emailManager;
 	}
 
 	public async Task<OperationResult<bool>> Process(LockUserAccountRequest request)
@@ -48,13 +52,24 @@ public class LockUserAccountProcessor : IProcessor<LockUserAccountRequest, bool>
 		user.LockoutReasons.AddRange(reasons);
 		user.LockoutEnd = request.EndDate ?? DateTime.MaxValue;
 
-		return await _userRepository.Update(user)
-			? new(
-				OperationStatus.Success,
-				true,
-				$"Locked user {user.Username} successfully")
-			: new(
+		if (!await _userRepository.Update(user))
+		{
+			return new(
 				OperationStatus.Unknown,
 				message: StatusMessages.Database.QueryFailed);
+		}
+
+		if (!await _emailManager.SendAccountLockedEmail(user))
+		{
+			return new(
+				OperationStatus.Success,
+				true,
+				$"User {user.Username} was locked successfully, but the email notification failed to send.");
+		}
+
+		return new(
+			OperationStatus.Success,
+			true,
+			$"Locked user {user.Username} successfully");
 	}
 }
