@@ -12,6 +12,7 @@ public class LockoutReason : EntityBase
 	[JsonIgnore]
 	public string NormalizedReason { get; set; } = string.Empty;
 
+	[JsonIgnore]
 	public List<SienarUser> Users { get; set; } = [];
 
 	/// <inheritdoc />

@@ -27,6 +27,7 @@ public class SienarUser : EntityBase
 	/// <summary>
 	/// Gets or sets a salted and hashed representation of the password
 	/// </summary>
+	[JsonIgnore]
 	public string PasswordHash { get; set; } = string.Empty;
 
 	/// <summary>
@@ -64,6 +65,7 @@ public class SienarUser : EntityBase
 	/// <summary>
 	/// Gets or sets a list of verification codes
 	/// </summary>
+	[JsonIgnore]
 	public List<VerificationCode> VerificationCodes { get; set; } = [];
 
 	public List<SienarRole> Roles { get; set; } = [];
