@@ -14,7 +14,7 @@ public class LockoutReasonFilterProcessor : IEntityFrameworkFilterProcessor<Lock
 	public IQueryable<LockoutReason> Search(IQueryable<LockoutReason> dataset, Filter filter)
 		=> string.IsNullOrEmpty(filter.SearchTerm)
 			? dataset
-			: dataset.Where(r => r.Reason.Contains(filter.SearchTerm));
+			: dataset.Where(r => r.NormalizedReason.Contains(filter.SearchTerm.ToUpperInvariant()));
 
 	public Expression<Func<LockoutReason, object>> GetSortPredicate(string? sortName) => r => r.Reason;
 }
