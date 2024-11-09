@@ -65,6 +65,7 @@ public class CmsRest : IWebPlugin
 			.AddBeforeHook<SienarUser, UserPasswordUpdateHook>()
 			.AddStateValidator<SienarUser, EnsureAccountInfoUniqueValidator>()
 			.AddBeforeHook<SienarUser, RemoveUserRelatedEntitiesHook>()
+			.AddBeforeHook<LockoutReason, LockoutReasonMapNormalizedFieldsHook>()
 
 		// Security
 			.AddStatusProcessor<LoginRequest, LoginProcessor>()
