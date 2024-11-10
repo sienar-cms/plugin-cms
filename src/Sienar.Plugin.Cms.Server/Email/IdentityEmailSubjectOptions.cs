@@ -19,4 +19,9 @@ public class IdentityEmailSubjectOptions
 	/// The subject of the user's password reset verification email
 	/// </summary>
 	public string PasswordReset { get; set; } = "Password reset";
+
+	/// <summary>
+	/// The subject of the user's account locked email
+	/// </summary>
+	public string AccountLocked { get; set; } = "You account has been locked";
 }

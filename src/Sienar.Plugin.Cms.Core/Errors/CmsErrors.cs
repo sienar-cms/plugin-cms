@@ -17,7 +17,7 @@ public static class CmsErrors
 		public const string LoginFailedNotConfirmed = "You have not confirmed your email address. Please check your email for a confirmation link and click it to confirm your email address.";
 		public const string LoginFailedNotConfirmedEmailDisabled = "You have not confirmed your email address. We cannot resend your confirmation code because the website administrator has disabled email.";
 		public const string LoginFailedLocked = "You have failed to log in too many times.";
-		public const string AccountLocked = "Your account has been locked. Try to log in for more information.";
+		public const string AccountLocked = "Your account has been locked.";
 		public const string AccountDeleted = "Your account has been deleted.";
 
 		public const string VerificationCodeInvalid = "The supplied verification code is invalid.";

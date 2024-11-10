@@ -40,6 +40,11 @@ public class SienarUserFilterProcessor : IEntityFrameworkFilterProcessor<SienarU
 			dataset = dataset.Include(u => u.Roles);
 		}
 
+		if (filter.Includes.Contains(nameof(SienarUser.LockoutReasons)))
+		{
+			dataset = dataset.Include(u => u.LockoutReasons);
+		}
+
 		return dataset;
 	}
 
