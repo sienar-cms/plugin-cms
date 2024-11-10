@@ -12,5 +12,5 @@ public static class SienarUserExtensions
 		=> loginOptions.RequireConfirmedAccount && sienarOptions.EnableEmail;
 
 	public static bool IsLockedOut(this SienarUser user)
-		=> user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.Now;
+		=> user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow;
 }

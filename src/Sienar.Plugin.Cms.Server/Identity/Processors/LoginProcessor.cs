@@ -75,7 +75,7 @@ public class LoginProcessor : IProcessor<LoginRequest, LoginResult>
 			if (user.LoginFailedCount >= _loginOptions.MaxFailedLoginAttempts)
 			{
 				user.LoginFailedCount = 0;
-				user.LockoutEnd = DateTime.Now + _loginOptions.LockoutTimespan;
+				user.LockoutEnd = DateTime.UtcNow + _loginOptions.LockoutTimespan;
 				var code = await _vcManager.CreateCode(user, VerificationCodeTypes.ViewLockoutReasons);
 
 				await _repository.Update(user);
