@@ -66,7 +66,7 @@ public class LoginProcessor : IProcessor<LoginRequest, LoginResult>
 					UserId = user.Id,
 					VerificationCode = code.Code
 				},
-				message: CmsErrors.Account.LoginFailedLocked);
+				message: CmsErrors.Account.AccountLocked);
 		}
 
 		if (!await _passwordManager.VerifyPassword(user, request.Password))
