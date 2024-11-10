@@ -96,7 +96,7 @@ public class VerificationCodeManager<TContext> : IVerificationCodeManager
 			return VerificationCodeStatus.Invalid;
 		}
 
-		if (code.ExpiresAt < DateTime.Now)
+		if (code.ExpiresAt < DateTime.UtcNow)
 		{
 			return VerificationCodeStatus.Expired;
 		}
@@ -131,6 +131,6 @@ public class VerificationCodeManager<TContext> : IVerificationCodeManager
 
 	private static DateTime GetVerificationCodeExpiration(string type)
 	{
-		return DateTime.Now.AddMinutes(30);
+		return DateTime.UtcNow.AddMinutes(30);
 	}
 }
