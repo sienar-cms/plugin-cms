@@ -114,4 +114,11 @@ public class AccountController : ServiceController
 			result.Result.PersonalDataFile.Contents,
 			result.Result.PersonalDataFile.Mime);
 	}
+
+	[HttpPost("lockout-reasons")]
+	[AllowAnonymous]
+	public Task<IActionResult> GetLockoutReaons(
+		[FromForm] AccountLockoutRequest data,
+		[FromServices] IService<AccountLockoutRequest, AccountLockoutResult> service)
+		=> Execute(() => service.Execute(data));
 }

@@ -86,6 +86,7 @@ public class CmsRest : IWebPlugin
 			.AddStatusProcessor<ResetPasswordRequest, ResetPasswordProcessor>()
 			.AddResultProcessor<AccountDataResult, GetAccountDataProcessor>()
 			.AddStatusProcessor<AccessTokenRequest, AccessTokenProcessor>()
+			.AddProcessor<AccountLockoutRequest, AccountLockoutResult, GetLockoutReasonsProcessor>()
 
 		// Registration
 			.AddStateValidator<RegisterRequest, RegistrationOpenValidator>()
