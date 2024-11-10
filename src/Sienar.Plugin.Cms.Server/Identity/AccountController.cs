@@ -51,7 +51,7 @@ public class AccountController : ServiceController
 	[AllowAnonymous]
 	public Task<IActionResult> Login(
 		[FromForm] LoginRequest data,
-		[FromServices] IService<LoginRequest, VerificationCode> service)
+		[FromServices] IService<LoginRequest, LoginResult> service)
 		=> Execute(() => service.Execute(data));
 
 	[HttpDelete("login")]
