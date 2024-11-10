@@ -15,7 +15,7 @@ using Sienar.Processors;
 namespace Sienar.Identity.Processors;
 
 /// <exclude />
-public class LoginProcessor : IProcessor<LoginRequest, Guid?>
+public class LoginProcessor : IProcessor<LoginRequest, VerificationCode>
 {
 	private readonly IUserRepository _repository;
 	private readonly IPasswordManager _passwordManager;
@@ -43,7 +43,7 @@ public class LoginProcessor : IProcessor<LoginRequest, Guid?>
 		_appOptions = appOptions.Value;
 	}
 
-	public async Task<OperationResult<Guid?>> Process(LoginRequest request)
+	public async Task<OperationResult<VerificationCode?>> Process(LoginRequest request)
 	{
 		var user = await _repository.ReadUserByNameOrEmail(
 			request.AccountName,
@@ -60,7 +60,7 @@ public class LoginProcessor : IProcessor<LoginRequest, Guid?>
 			var code = await _vcManager.CreateCode(user, VerificationCodeTypes.ViewLockoutReasons);
 			return new(
 				OperationStatus.Unauthorized,
-				code.Code,
+				code,
 				message: CmsErrors.Account.LoginFailedLocked);
 		}
 
@@ -77,7 +77,7 @@ public class LoginProcessor : IProcessor<LoginRequest, Guid?>
 				await _emailManager.SendAccountLockedEmail(user);
 				return new(
 					OperationStatus.Unauthorized,
-					code.Code,
+					code,
 					message: CmsErrors.Account.LoginFailedLocked);
 			}
 
