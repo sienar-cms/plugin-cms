@@ -25,6 +25,6 @@ public class AssignMediaFieldsHook : IBeforeProcess<Upload>
 			entity.UserId = await _userAccessor.GetUserId();
 		}
 
-		entity.UploadedAt = DateTime.Now;
+		entity.UploadedAt = DateTime.UtcNow;
 	}
 }
