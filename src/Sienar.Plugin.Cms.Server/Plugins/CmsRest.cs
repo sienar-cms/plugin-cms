@@ -140,4 +140,13 @@ public class CmsRest : IWebPlugin
 			.ApplyDefaultConfiguration<IdentityEmailSubjectOptions>(config.GetSection("Sienar:Email:IdentityEmailSubjects"))
 			.ApplyDefaultConfiguration<LoginOptions>(config.GetSection("Sienar:Login"));
 	}
+
+	/// <inheritdoc />
+	public void SetupStartupDependencies(IServiceCollection services)
+	{
+		services
+			.TryAddConfigurer<DefaultMvcConfigurer>()
+			.TryAddConfigurer<DefaultMvcBuilderConfigurer>()
+			.TryAddConfigurer<DefaultAntiforgeryConfigurer>();
+	}
 }
