@@ -109,10 +109,6 @@ public class CmsRest : IWebPlugin
 		 *******/
 
 		services.TryAddScoped<ISignInManager, CookieSignInManager>();
-		services
-			.AddConfiguration(new DefaultAuthorizationConfigurer())
-			.AddConfiguration(new DefaultAuthenticationConfigurer())
-			.AddConfiguration(new DefaultAuthenticationBuilderConfigurer());
 
 
 		/*********
@@ -145,6 +141,9 @@ public class CmsRest : IWebPlugin
 	public void SetupStartupDependencies(IServiceCollection services)
 	{
 		services
+			.TryAddConfigurer<DefaultAuthorizationConfigurer>()
+			.TryAddConfigurer<DefaultAuthenticationConfigurer>()
+			.TryAddConfigurer<DefaultAuthenticationBuilderConfigurer>()
 			.TryAddConfigurer<DefaultMvcConfigurer>()
 			.TryAddConfigurer<DefaultMvcBuilderConfigurer>()
 			.TryAddConfigurer<DefaultAntiforgeryConfigurer>();
