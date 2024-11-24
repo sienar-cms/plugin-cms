@@ -109,10 +109,6 @@ public class CmsRest : IWebPlugin
 		 *******/
 
 		services.TryAddScoped<ISignInManager, CookieSignInManager>();
-		services
-			.AddConfiguration(new DefaultAuthorizationConfigurer())
-			.AddConfiguration(new DefaultAuthenticationConfigurer())
-			.AddConfiguration(new DefaultAuthenticationBuilderConfigurer());
 
 
 		/*********
@@ -139,5 +135,17 @@ public class CmsRest : IWebPlugin
 			.ApplyDefaultConfiguration<EmailSenderOptions>(config.GetSection("Sienar:Email:Sender"))
 			.ApplyDefaultConfiguration<IdentityEmailSubjectOptions>(config.GetSection("Sienar:Email:IdentityEmailSubjects"))
 			.ApplyDefaultConfiguration<LoginOptions>(config.GetSection("Sienar:Login"));
+	}
+
+	/// <inheritdoc />
+	public void SetupStartupDependencies(IServiceCollection services)
+	{
+		services
+			.TryAddConfigurer<DefaultAuthorizationConfigurer>()
+			.TryAddConfigurer<DefaultAuthenticationConfigurer>()
+			.TryAddConfigurer<DefaultAuthenticationBuilderConfigurer>()
+			.TryAddConfigurer<DefaultMvcConfigurer>()
+			.TryAddConfigurer<DefaultMvcBuilderConfigurer>()
+			.TryAddConfigurer<DefaultAntiforgeryConfigurer>();
 	}
 }

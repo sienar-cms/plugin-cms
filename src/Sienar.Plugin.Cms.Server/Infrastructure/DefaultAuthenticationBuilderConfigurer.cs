@@ -2,7 +2,6 @@
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Sienar.Infrastructure;
@@ -11,9 +10,7 @@ namespace Sienar.Infrastructure;
 public class DefaultAuthenticationBuilderConfigurer
 	: IConfigurer<AuthenticationBuilder>
 {
-	public void Configure(
-		AuthenticationBuilder options,
-		IConfiguration config)
+	public void Configure(AuthenticationBuilder options)
 	{
 		options.AddCookie(
 			CookieAuthenticationDefaults.AuthenticationScheme,
