@@ -42,7 +42,6 @@ public class CmsRest : IWebPlugin
 
 		services.AddHttpContextAccessor();
 
-		services.TryAddScoped<IEmailSender, DefaultEmailSender>();
 		services.TryAddScoped<IPasswordHasher<SienarUser>, PasswordHasher<SienarUser>>();
 		services.TryAddScoped<IPasswordManager, PasswordManager>();
 		services.TryAddScoped<IUserClaimsFactory, UserClaimsFactory>();
