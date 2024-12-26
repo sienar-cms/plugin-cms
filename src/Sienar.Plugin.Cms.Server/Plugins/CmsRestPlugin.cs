@@ -21,24 +21,35 @@ using Sienar.Media.Hooks;
 namespace Sienar.Plugins;
 
 /// <exclude />
-public class CmsRest : IWebPlugin
+public class CmsRestPlugin : IPlugin
 {
-	public PluginData PluginData { get; } = new()
-	{
-		Name = "Sienar CMS - REST API",
-		Description = "Configures Sienar as a collection of REST API endpoints that can be used as a backend for desktop applications, mobile apps, or JavaScript/WebAssembly SPAs.",
-		Author = "Christian LeVesque",
-		AuthorUrl = "https://levesque.dev",
-		Homepage = "https://sienar.io",
-		Version = Version.Parse("0.1.0")
-	};
+	private readonly WebApplicationBuilder _builder;
+	private readonly IPluginDataProvider _pluginDataProvider;
 
-	public void SetupDependencies(WebApplicationBuilder builder)
+	public CmsRestPlugin(
+		WebApplicationBuilder builder,
+		IPluginDataProvider pluginDataProvider)
 	{
+		_builder = builder;
+		_pluginDataProvider = pluginDataProvider;
+	}
+
+	public void Configure()
+	{
+		_pluginDataProvider.Add(new PluginData
+		{
+			Name = "Sienar CMS - REST API",
+			Description = "Configures Sienar as a collection of REST API endpoints that can be used as a backend for desktop applications, mobile apps, or JavaScript/WebAssembly SPAs.",
+			Author = "Christian LeVesque",
+			AuthorUrl = "https://levesque.dev",
+			Homepage = "https://sienar.io",
+			Version = Version.Parse("0.1.1")
+		});
+
 		SienarUtils.SetupBaseDirectory();
 
-		var services = builder.Services;
-		var config = builder.Configuration;
+		var services = _builder.Services;
+		var config = _builder.Configuration;
 
 		services.AddHttpContextAccessor();
 
@@ -136,10 +147,16 @@ public class CmsRest : IWebPlugin
 			.ApplyDefaultConfiguration<LoginOptions>(config.GetSection("Sienar:Login"));
 	}
 
-	/// <inheritdoc />
-	public void SetupStartupDependencies(IServiceCollection services)
+	/// <summary>
+	/// Configures the <see cref="SienarAppBuilder"/> with configurers and dependent plugins
+	/// </summary>
+	/// <param name="builder">The <see cref="SienarAppBuilder"/></param>
+	[AppConfigurer]
+	public static void ConfigureApp(SienarAppBuilder builder)
 	{
-		services
+		builder.AddPlugin<MvcPlugin>();
+
+		builder.StartupServices
 			.TryAddConfigurer<DefaultAuthorizationConfigurer>()
 			.TryAddConfigurer<DefaultAuthenticationConfigurer>()
 			.TryAddConfigurer<DefaultAuthenticationBuilderConfigurer>()
