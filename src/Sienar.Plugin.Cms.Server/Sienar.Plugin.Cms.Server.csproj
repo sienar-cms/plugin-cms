@@ -9,7 +9,7 @@
 
 		<PackageId>Sienar.Plugin.Cms.Server</PackageId>
 		<Title>Sienar.Plugin.Cms.Server.Core</Title>
-		<PackageVersion>0.1.0</PackageVersion>
+		<PackageVersion>0.1.1</PackageVersion>
 		<PackageReleaseNotes>Initial release</PackageReleaseNotes>
 		<Authors>Christian LeVesque</Authors>
 		<Description>The CMS portion of Sienar applications</Description>
@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Sienar.Architecture.Web" Version="0.1.0"/>
+		<PackageReference Include="Sienar.Architecture.Web" Version="0.1.1"/>
 
 		<ProjectReference
 			Condition=" '$(Configuration)' != 'Release' "
