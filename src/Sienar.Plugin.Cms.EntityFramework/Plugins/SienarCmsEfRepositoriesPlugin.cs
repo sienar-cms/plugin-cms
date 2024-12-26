@@ -12,24 +12,33 @@ using Sienar.Media.Processors;
 
 namespace Sienar.Plugins;
 
-public class SienarCmsEfRepositories<TContext> : IWebPlugin
+public class SienarCmsEfRepositoriesPlugin<TContext> : IPlugin
 	where TContext : DbContext
 {
-	/// <inheritdoc />
-	public PluginData PluginData { get; } = new()
-	{
-		Name = "Sienar CMS Entity Framework Repositories",
-		Version = Version.Parse("0.1.0"),
-		Author = "Christian LeVesque",
-		AuthorUrl = "https://levesque.dev",
-		Description = "This plugin provides repositories to persist app data to any database provider supported by Entity Framework",
-		Homepage = "https://sienar.levesque.dev"
-	};
+	private readonly WebApplicationBuilder _builder;
+	private readonly IPluginDataProvider _pluginDataProvider;
 
-	/// <inheritdoc />
-	public void SetupDependencies(WebApplicationBuilder builder)
+	public SienarCmsEfRepositoriesPlugin(
+		WebApplicationBuilder builder,
+		IPluginDataProvider pluginDataProvider)
 	{
-		var services = builder.Services;
+		_builder = builder;
+		_pluginDataProvider = pluginDataProvider;
+	}
+
+	public void Configure()
+	{
+		_pluginDataProvider.Add(new PluginData
+		{
+			Name = "Sienar CMS Entity Framework Repositories",
+			Version = Version.Parse("0.1.0"),
+			Author = "Christian LeVesque",
+			AuthorUrl = "https://levesque.dev",
+			Description = "This plugin provides repositories to persist app data to any database provider supported by Entity Framework",
+			Homepage = "https://sienar.io"
+		});
+
+		var services = _builder.Services;
 
 		services.TryAddScoped<IVerificationCodeManager, VerificationCodeManager<TContext>>();
 		services.TryAddScoped<IUserRepository, UserRepository<TContext>>();
