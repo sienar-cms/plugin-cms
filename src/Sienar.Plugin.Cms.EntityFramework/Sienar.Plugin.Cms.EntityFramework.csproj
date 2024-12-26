@@ -7,7 +7,7 @@
 
 		<PackageId>Sienar.Plugin.Cms.EntityFramework</PackageId>
 		<Title>Sienar.Plugin.Cms.EntityFramework</Title>
-		<PackageVersion>0.1.0</PackageVersion>
+		<PackageVersion>0.1.1</PackageVersion>
 		<PackageReleaseNotes>Initial release</PackageReleaseNotes>
 		<Authors>Christian LeVesque</Authors>
 		<Description>EntityFramework stores for Sienar CMS applications</Description>
@@ -32,7 +32,7 @@
 			Include="..\Sienar.Plugin.Cms.Server\Sienar.Plugin.Cms.Server.csproj"/>
 		<PackageReference
 			Condition=" '$(Configuration)' == 'Release' "
-			Include="Sienar.Plugin.Cms.Server" Version="0.1.0"/>
+			Include="Sienar.Plugin.Cms.Server" Version="0.1.1"/>
 	</ItemGroup>
 
 </Project>
